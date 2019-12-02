@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        applicationId "com.flyscale.gradle_flavor"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions("")
+    productFlavors{
+        productA{
+            applicationId "com.flyscale.gradleflavor.a"
+            versionName "version-a-1.0"
+            buildConfigField("String", "PRODUCT_NAME", "\"a\"");
+            buildConfigField("boolean", "LOG_DEBUG", "true");
+//            resValue("")
+        }
+        productB{
+            applicationId "com.flyscale.gradleflavor.b"
+            versionName "version-b-1.0"
+            buildConfigField("String", "PRODUCT_NAME", "\"b\"");
+            buildConfigField("boolean", "LOG_DEBUG", "false");
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            resources.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/java']
+            renderscript.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+            jniLibs.srcDirs = ['libs']
+
+        }
+        productA.java.srcDirs = ['src/productA/java']
+        productB.java.srcDirs = ['src/productB/java']
+//        version2.res.srcDirs = ['src/version2/res']
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

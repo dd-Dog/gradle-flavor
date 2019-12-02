@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Gradle-Flavor</string>
+    <string name="product_type">product main</string>
+</resources>
